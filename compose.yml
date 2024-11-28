@@ -1,0 +1,15 @@
+services:
+  db:
+    # 記述時点の Amazon RDS for PostgreSQL でサポートされている最新のバージョンを指定しています。
+    image: postgres:16.4
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      # ボリューム（db-data）をデータベースのデータのディレクトリ（/var/lib/postgresql/data）
+      # にマウントすることで、データベースのデータを永続化します。
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
