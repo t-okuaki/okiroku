@@ -10,6 +10,17 @@ services:
       # ボリューム（db-data）をデータベースのデータのディレクトリ（/var/lib/postgresql/data）
       # にマウントすることで、データベースのデータを永続化します。
       - db-data:/var/lib/postgresql/data
+  backend:
+    build: ./backend
+    # コマンドは Docker 公式ドキュメントからもリンクされている以下のページを参考にしています。
+    # https://github.com/docker/awesome-compose/tree/18f59bdb09ecf520dd5758fbf90dec314baec545/official-documentation-samples/rails
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/myapp
 
 volumes:
   db-data:
