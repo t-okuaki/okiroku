@@ -27,21 +27,21 @@ default: &default
 
 development:
   <<: *default
-  database: myapp_development
+  database: okiroku_development
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
   # When left blank, PostgreSQL will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: myapp
+  username: postgres
 
   # The password associated with the PostgreSQL role (username).
-  #password:
+  password: postgres
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
-  #host: localhost
+  host: db
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
@@ -61,7 +61,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: myapp_test
+  database: okiroku_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -86,18 +86,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: myapp_production
-    username: myapp
-    password: <%= ENV["MYAPP_DATABASE_PASSWORD"] %>
+    database: okiroku_production
+    username: okiroku
+    password: <%= ENV["OKIROKU_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: myapp_production_cache
+    database: okiroku_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: myapp_production_queue
+    database: okiroku_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: myapp_production_cable
+    database: okiroku_production_cable
     migrations_paths: db/cable_migrate
