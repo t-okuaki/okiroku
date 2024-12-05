@@ -10,17 +10,38 @@ services:
       # ボリューム（db-data）をデータベースのデータのディレクトリ（/var/lib/postgresql/data）
       # にマウントすることで、データベースのデータを永続化します。
       - db-data:/var/lib/postgresql/data
+
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     # コマンドは Docker 公式ドキュメントからもリンクされている以下のページを参考にしています。
     # https://github.com/docker/awesome-compose/tree/18f59bdb09ecf520dd5758fbf90dec314baec545/official-documentation-samples/rails
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     ports:
-      - "3000:3000"
+      - "8080:3000"
     depends_on:
       - db
     volumes:
       - ./backend:/myapp
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.development
+    ports:
+      - "3000:3000"
+    volumes:
+      # node_modules を除いて、frontend のすべてをマウントする。
+      # node_modules をボリュームに入れることで実現している。Volume Trick と呼ばれている。
+      #
+      # 参考：
+      # https://zenn.dev/foolishell/articles/3d327557af3554
+      # 上の記事の元ネタの元ネタ：
+      # https://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+
 volumes:
   db-data:
+  frontend_node_modules:
