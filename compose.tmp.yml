@@ -1,0 +1,9 @@
+services:
+  # create-next-app を実行するためのサービスです。
+  # 具体的には本サービス内で以下を実行します。
+  # npx create-next-app@latest frontend --skip-install
+  # create-next-app を実行した後は削除しても問題ありません。
+  frontend-creation:
+    build: ./frontend-creation
+    volumes:
+      - .:/app
