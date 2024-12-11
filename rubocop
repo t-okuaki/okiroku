@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# VSCode の ruby-rubocop 拡張機能から Docker コンテナ内の rubocop を実行するためのファイルです。
+# .vscode/settings.json の "ruby.rubocop.executePath" で、本ファイルの場所を指定してください。
+# README.md も参照してください。
+#
+# 参照：
+# - https://github.com/misogi/vscode-ruby-rubocop/issues/112#issuecomment-673513315
+# - https://qiita.com/horisho13/items/734362d387a5214fd2b4
+
+docker compose exec -T backend rubocop -c .rubocop.yml "$@"
