@@ -24,6 +24,8 @@ services:
       - db
     volumes:
       - ./backend:/myapp
+    tty: true
+    stdin_open: true
 
   frontend:
     build:
