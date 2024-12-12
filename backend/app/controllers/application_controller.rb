@@ -26,4 +26,11 @@ class ApplicationController < ActionController::API
   def hello
     render json: { message: "hello!" }
   end
+
+  private
+
+  # TODO: 認証機能追加後に実装し直してください。
+  def current_user
+    @current_user ||= User.first
+  end
 end
