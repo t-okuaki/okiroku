@@ -49,30 +49,32 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_12_064510) do
   create_table "payment_item_works", force: :cascade do |t|
     t.bigint "payment_item_id", null: false
     t.bigint "work_id", null: false
-    t.text "work_name", null: false
-    t.integer "work_count", null: false
+    t.text "name", null: false
+    t.integer "count", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["count"], name: "index_payment_item_works_on_count"
+    t.index ["name"], name: "index_payment_item_works_on_name"
     t.index ["payment_item_id", "work_id"], name: "index_payment_item_works_on_payment_item_id_and_work_id", unique: true
     t.index ["payment_item_id"], name: "index_payment_item_works_on_payment_item_id"
-    t.index ["work_count"], name: "index_payment_item_works_on_work_count"
     t.index ["work_id"], name: "index_payment_item_works_on_work_id"
-    t.index ["work_name"], name: "index_payment_item_works_on_work_name"
   end
 
   create_table "payment_items", force: :cascade do |t|
     t.bigint "payment_id", null: false
     t.bigint "item_id", null: false
     t.bigint "space_id", null: false
-    t.text "item_name", null: false
-    t.bigint "item_price", null: false
+    t.text "name", null: false
+    t.bigint "price", null: false
+    t.integer "count", null: false
     t.text "space_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["count"], name: "index_payment_items_on_count"
     t.index ["item_id"], name: "index_payment_items_on_item_id"
-    t.index ["item_name"], name: "index_payment_items_on_item_name"
-    t.index ["item_price"], name: "index_payment_items_on_item_price"
+    t.index ["name"], name: "index_payment_items_on_name"
     t.index ["payment_id"], name: "index_payment_items_on_payment_id"
+    t.index ["price"], name: "index_payment_items_on_price"
     t.index ["space_id"], name: "index_payment_items_on_space_id"
     t.index ["space_name"], name: "index_payment_items_on_space_name"
   end
@@ -132,7 +134,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_12_064510) do
   add_foreign_key "item_works", "works"
   add_foreign_key "items", "spaces"
   add_foreign_key "payment_item_works", "payment_items"
+  add_foreign_key "payment_item_works", "works"
+  add_foreign_key "payment_items", "items"
   add_foreign_key "payment_items", "payments"
+  add_foreign_key "payment_items", "spaces"
   add_foreign_key "payments", "circles"
   add_foreign_key "space_works", "spaces"
   add_foreign_key "space_works", "works"
