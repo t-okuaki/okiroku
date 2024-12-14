@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   resources :circles, only: [] do
     resources :spaces, only: [ :index ]
+    resources :payments, only: [ :create ]
   end
 
   resources :spaces, only: [ :show ] do
