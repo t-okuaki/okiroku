@@ -6,4 +6,12 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "/hello" => "application#hello", as: :hello
+
+  resources :circles, only: [] do
+    resources :spaces, only: [ :index ]
+  end
+
+  resources :spaces, only: [ :show ] do
+    resources :items, only: [ :index ]
+  end
 end
