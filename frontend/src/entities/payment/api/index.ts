@@ -31,3 +31,17 @@ export async function createPayment({
 
   return payment;
 }
+
+export async function getPayments({ circleId }: { circleId: number }) {
+  const response = await fetch(
+    `http://backend:3000/circles/${circleId}/payments`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch payments");
+  }
+
+  const payments: PaymentType[] = await response.json();
+
+  return payments;
+}

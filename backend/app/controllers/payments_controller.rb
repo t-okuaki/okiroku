@@ -1,4 +1,12 @@
 class PaymentsController < ApplicationController
+  def index
+    # TODO: スコープ
+    @payments =
+      Payment.where(circle_id: params[:circle_id]).
+      preload(payment_items: [ :payment_item_works ]).
+      order(created_at: :desc)
+  end
+
   # TODO: リクエストパラメーターのバリデーション。
   # TODO: リクエスト時点のユーザーが見ている情報と、実際のデータベースの情報が一致しない可能性を考慮。
   def create
