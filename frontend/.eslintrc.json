@@ -1,0 +1,11 @@
+{
+  "extends": [
+    // 以下 2 つは Next.js のデフォルトの ESLint の設定です。
+    "next/core-web-vitals",
+    "next/typescript",
+
+    // eslint-config-prettier は Prettier 公式の ESLint config です。
+    // ESLint の設定のうち、Prettier と競合するものをオフにしてくれるので入れています。
+    "prettier"
+  ]
+}

@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1
+
+# この Dockerfile は以下の Next.js の example を参考に作成しました。
+# https://github.com/vercel/next.js/blob/363303932ac34de55e0ac8f39f0d5d04d8421918/examples/with-docker-compose/next-app/dev.Dockerfile
+
+FROM node:18-alpine
+
+WORKDIR /app
+
+# アプリケーションのソースコードの変更があるたびにパッケージのインストールが実行されることを防ぐため、
+# パッケージのインストールをしてからアプリケーションのソースコードのコピーを行います。
+COPY .yarnrc package.json yarn.lock* ./
+RUN yarn
+
+# Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line to disable telemetry at run time
+ENV NEXT_TELEMETRY_DISABLED 1
+
+CMD ["yarn", "dev"]
